@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+@theme {
+  --font-pixel: "Press Start 2P", system-ui, sans-serif;
+  --font-mono: "VT323", monospace;
+  --color-g-cyan: #00ffff;
+  --color-g-magenta: #ff00ff;
+  --color-g-black: #050505;
+}
+
+@layer utilities {
+  .text-glitch {
+    text-shadow: 2px 0 var(--color-g-magenta), -2px 0 var(--color-g-cyan);
+    animation: text-flicker 5s infinite steps(1);
+  }
+  .text-glitch-severe {
+    text-shadow: 3px 1px var(--color-g-cyan), -3px -1px var(--color-g-magenta);
+    animation: text-flicker-severe 1.5s infinite steps(2);
+  }
+  .bg-static {
+    background-image: repeating-radial-gradient(circle at 17% 32%, #444 0.00001%, #000 0.00004%, #222 0.00005%);
+    background-size: 3px 3px;
+    opacity: 0.15;
+    animation: static-noise 0.2s infinite;
+  }
+  .scanlines {
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+  }
+  .screen-tear {
+    animation: screen-tear 4s infinite;
+  }
+  .glitch-border {
+    box-shadow: 3px 3px 0 var(--color-g-magenta), -3px -3px 0 var(--color-g-cyan);
+    border: 1px solid white;
+    background: black;
+  }
+  .glitch-border-hover:hover {
+    background: white;
+    color: black;
+    box-shadow: 4px 4px 0 var(--color-g-cyan), -4px -4px 0 var(--color-g-magenta);
+  }
+}
+
+@keyframes text-flicker {
+  0%, 90% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; transform: translate(0); }
+  91% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; transform: translate(1px, -1px); }
+  92% { text-shadow: 3px 0 #00ffff, -3px 0 #ff00ff; transform: translate(0); }
+  93%, 100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+}
+
+@keyframes text-flicker-severe {
+  0% { transform: translate(0); }
+  10% { transform: translate(-2px, 2px); filter: invert(100%); }
+  15% { transform: translate(0); filter: invert(0); }
+  50% { transform: translate(1px, -1px); }
+  55% { transform: translate(0); }
+  100% { transform: translate(0); }
+}
+
+@keyframes static-noise {
+  0%   { background-position: 0 0; }
+  10%  { background-position: 10px 10px; }
+  20%  { background-position: -10px -10px; }
+  30%  { background-position: 5px -5px; }
+  40%  { background-position: -5px 5px; }
+  50%  { background-position: 2px 8px; }
+  60%  { background-position: -2px -8px; }
+  70%  { background-position: 8px 2px; }
+  80%  { background-position: -8px -2px; }
+  90%  { background-position: 4px 4px; }
+  100% { background-position: -4px -4px; }
+}
+
+@keyframes screen-tear {
+  0%, 94% { transform: skewX(0) translateX(0); }
+  95% { transform: skewX(15deg) translateX(-15px); }
+  96% { transform: skewX(-10deg) translateX(10px); }
+  97% { transform: skewX(0) translateX(0); filter: invert(100%); }
+  98% { filter: invert(0); transform: skewX(0) translateX(0); }
+  100% { transform: skewX(0) translateX(0); }
+}
